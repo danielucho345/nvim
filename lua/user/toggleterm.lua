@@ -1,45 +1,66 @@
 local status_ok, toggleterm = pcall(require, "toggleterm")
 if not status_ok then
-	return
-end
-local powershell_options = {
-  shell = vim.fn.executable "pwsh" == 1 and "pwsh" or "powershell",
-  shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
-  shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait",
-  shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode",
-  shellquote = "",
-  shellxquote = "",
-}
-
-for option, value in pairs(powershell_options) do
-  vim.opt[option] = value
+  return
 end
 
+
+local BinaryFormat = package.cpath:match("%p[\\|/]?%p(%a+)")
+
+print(BinaryFormat, "format")
+if BinaryFormat == "dll" then
+  -- Windows config
+  local powershell_options = {
+    shell = vim.fn.executable "pwsh" == 1 and "pwsh" or "powershell",
+    shellcmdflag =
+    "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
+    shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait",
+    shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode",
+    shellquote = "",
+    shellxquote = "",
+  }
+  for option, value in pairs(powershell_options) do
+    vim.opt[option] = value
+  end
+  function os.name()
+    return print("Windows")
+  end
+elseif BinaryFormat == "so" then
+  --Iterm Config
+  function os.name()
+    return print("Linux")
+  end
+elseif BinaryFormat == "dylib" then
+  function os.name()
+    return print("MacOS")
+  end
+end
+
+BinaryFormat = nil
 toggleterm.setup({
-	size = 20,
-	open_mapping = [[<c-\>]],
-	hide_numbers = true,
-	shade_filetypes = {},
-	shade_terminals = true,
-	shading_factor = 2,
-	start_in_insert = true,
-	insert_mappings = true,
-	persist_size = true,
-	direction = "float",
-	close_on_exit = true,
-	shell = vim.o.shell,
-	float_opts = {
-		border = "curved",
-		winblend = 0,
-		highlights = {
-			border = "Normal",
-			background = "Normal",
-		},
-	},
+  size = 20,
+  open_mapping = [[<S-t>]],
+  hide_numbers = true,
+  shade_filetypes = {},
+  shade_terminals = true,
+  shading_factor = 2,
+  start_in_insert = true,
+  insert_mappings = true,
+  persist_size = true,
+  direction = "float",
+  close_on_exit = true,
+  shell = vim.o.shell,
+  float_opts = {
+    border = "curved",
+    winblend = 0,
+    highlights = {
+      border = "Normal",
+      background = "Normal",
+    },
+  },
 })
 
 function _G.set_terminal_keymaps()
-  local opts = {noremap = true}
+  local opts = { noremap = true }
   vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
   vim.api.nvim_buf_set_keymap(0, 't', 'jk', [[<C-\><C-n>]], opts)
   vim.api.nvim_buf_set_keymap(0, 't', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
@@ -54,32 +75,29 @@ local Terminal = require("toggleterm.terminal").Terminal
 local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
 
 function _LAZYGIT_TOGGLE()
-	lazygit:toggle()
+  lazygit:toggle()
 end
 
 local node = Terminal:new({ cmd = "node", hidden = true })
 
 function _NODE_TOGGLE()
-	node:toggle()
+  node:toggle()
 end
 
 local ncdu = Terminal:new({ cmd = "ncdu", hidden = true })
 
 function _NCDU_TOGGLE()
-	ncdu:toggle()
+  ncdu:toggle()
 end
 
 local htop = Terminal:new({ cmd = "htop", hidden = true })
 
 function _HTOP_TOGGLE()
-	htop:toggle()
+  htop:toggle()
 end
 
 local python = Terminal:new({ cmd = "autopep8 --in-place --aggressive --aggressive --recursive .", hidden = true })
 
 function _PYTHON_TOGGLE()
-	python:toggle()
+  python:toggle()
 end
-
-
-
