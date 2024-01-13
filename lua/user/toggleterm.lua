@@ -38,7 +38,7 @@ end
 BinaryFormat = nil
 toggleterm.setup({
   size = 20,
-  open_mapping = [[<S-t>]],
+  open_mapping = [[<C-T>]],
   hide_numbers = true,
   shade_filetypes = {},
   shade_terminals = true,
@@ -90,7 +90,7 @@ function _NCDU_TOGGLE()
   ncdu:toggle()
 end
 
-local htop = Terminal:new({ cmd = "htop", hidden = true })
+local htop = Terminal:new({ hidden = true })
 
 function _HTOP_TOGGLE()
   htop:toggle()
