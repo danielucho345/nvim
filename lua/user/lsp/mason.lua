@@ -3,6 +3,7 @@ local servers = {
 	"cssls",
 	"html",
 	"tsserver",
+  "ruff_lsp",
 	"pyright",
 	"jsonls",
 }
