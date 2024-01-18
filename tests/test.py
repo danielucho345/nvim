@@ -1,5 +1,4 @@
 import datetime
-import padas as pd 
 
 now = datetime.datetime.now()
 
