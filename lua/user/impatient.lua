@@ -1,6 +1,6 @@
 local status_ok, impatient = pcall(require, "impatient")
 if not status_ok then
-  pritn('impatient module not loaded')
+  print ('impatient module not loaded')
   return
 end
 

@@ -1,6 +1,14 @@
-local todo = require('todo-comments')
+local status_ok, todo= pcall(require, "todo-comments")
+if not status_ok then
+  print("not todo-comments")
+  return
+end
 
-todo.setup({
+
+
+--TODO something  
+
+todo.setup{
   signs = true,      -- show icons in the signs column
   sign_priority = 8, -- sign priority
   -- keywords recognized as todo comments
@@ -64,4 +72,17 @@ todo.setup({
     -- pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
   },
 }
-)
+
+vim.keymap.set("n", "]t", function()
+  require("todo-comments").jump_next()
+end, { desc = "Next todo comment" })
+
+vim.keymap.set("n", "[t", function()
+  require("todo-comments").jump_prev()
+end, { desc = "Previous todo comment" })
+
+-- You can also specify a list of valid jump keywords
+
+vim.keymap.set("n", "]t", function()
+  require("todo-comments").jump_next({keywords = { "ERROR", "WARNING" }})
+end, { desc = "Next error/warning todo comment" })
