@@ -5,7 +5,6 @@ Sub import to test ruff and pyright vehaibor.
 import datetime
 
 now = datetime.datetime.now()
-
 class Myclass:
     """Class to experiment the suggestions with Ruff LSP."""
 

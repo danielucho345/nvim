@@ -1,10 +1,35 @@
+-- return {
+--   settings = {
+--     pyright = {
+--       disableOrganizeImports = true,
+--     },
+--     python = {
+--       analysis = {
+--         -- autoSearchPaths = true,
+--         typeCheckingMode       = "basic",
+--         useLibraryCodeForTypes = true,
+--         stubPath               = { "src" },
+--         include                = { "src" },
+--         extraPaths             = { "src" },
+--       },
+--     },
+--   },
+-- }
 return {
-  on_attach = function() end,
+  handlers = {
+    ["textDocument/publishDiagnostics"] = function() end,
+  },
   settings = {
+    pyright = {
+      disableOrganizeImports = true,
+    },
     python = {
       analysis = {
-        typeCheckingMode = "off"
-      }
-    }
+        autoSearchPaths = true,
+        typeCheckingMode = "basic",
+        useLibraryCodeForTypes = true,
+        include = { "src" },
+      },
+    },
   },
 }
