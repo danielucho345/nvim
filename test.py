@@ -8,6 +8,7 @@ from datetime import datetime
 
 from tests.test import Myclass
 
-now = datetime.now() #TODO add the time zone
+# TODO : somthing  # noqa: FIX002
+now = datetime.now()
 
 my = Myclass()
