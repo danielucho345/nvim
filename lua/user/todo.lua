@@ -6,7 +6,6 @@ end
 
 
 
---TODO something  
 
 todo.setup{
   signs = true,      -- show icons in the signs column
