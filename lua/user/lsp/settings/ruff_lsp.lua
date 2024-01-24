@@ -1,6 +1,7 @@
-return{
-
-init_options = {
+return {
+  init_options = {
+    single_file_support = false,
+    root_dir = vim.fn.getcwd(),
     settings = {
       -- Any extra CLI arguments for `ruff` go here.
       args = {
