@@ -59,10 +59,8 @@ return packer.startup(function(use)
 
   -- Colorschemes
   use { "folke/tokyonight.nvim" }
-  use { "lunarvim/darkplus.nvim" }
-  use 'navarasu/onedark.nvim'
-  use "olimorris/onedarkpro.nvim"
   use "craftzdog/solarized-osaka.nvim"
+  use 'navarasu/onedark.nvim'
   -- Cmp
   use { "hrsh7th/nvim-cmp" }         -- The completion plugin
   use { "hrsh7th/cmp-buffer" }       -- buffer completions
@@ -94,7 +92,7 @@ return packer.startup(function(use)
   use { "lewis6991/gitsigns.nvim" }
 
   --Todo
-  use {"folke/todo-comments.nvim"}
+  use { "folke/todo-comments.nvim" }
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
