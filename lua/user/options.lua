@@ -13,7 +13,7 @@ local options = {
   showtabline = 2,                         -- always show tabs
   smartcase = true,                        -- smart case
   smartindent = true,                      -- make indenting smarter again
-  splitbelow = true,                       -- force all horizontal splits to go below current window
+splitbelow = true,                       -- force all horizontal splits to go below current window
   splitright = true,                       -- force all vertical splits to go to the right of current window
   swapfile = false,                        -- creates a swapfile
   -- termguicolors = true,                    -- set term gui colors (most terminals support this)
@@ -36,12 +36,26 @@ local options = {
   sidescrolloff = 8,                       -- minimal number of screen columns either side of cursor if wrap is `false`
   guifont = "monospace:h17",               -- the font used in graphical neovim applications
   whichwrap = "bs<>[]hl",                  -- which "horizontal" keys are allowed to travel to prev/next line
+
+  foldlevel= 20,
+  fdc="3",
+  foldmethod = "expr",
+
+  foldexpr = "nvim_treesitter#foldexpr()",
 }
 
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
-
+function CustomFoldText()
+  local indentation = vim.fn.indent(vim.v.foldstart - 1)
+  local foldSize = 1 + vim.v.foldend - vim.v.foldstart
+  local foldSizeStr = " " .. foldSize .. " lines "
+  local foldLevelStr = string.rep("+--", vim.v.foldlevel)
+  local expansionString = string.rep(" ", indentation)
+  return expansionString .. foldLevelStr .. foldSizeStr
+end
+vim.api.nvim_set_var('CustomFoldText', CustomFoldText)
 -- vim.opt.shortmess = "ilmnrx"                        -- flags to shorten vim messages, see :help 'shortmess'
 vim.opt.shortmess:append "c"                           -- don't give |ins-completion-menu| messages
 vim.opt.iskeyword:append "-"                           -- hyphenated words recognized by searches
