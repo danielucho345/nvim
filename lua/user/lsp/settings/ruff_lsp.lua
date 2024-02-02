@@ -6,7 +6,8 @@ return {
       -- Any extra CLI arguments for `ruff` go here.
       args = {
         "--select=ALL",
-        "--ignore=RET504,TD002,TD001,TD003,PD015"
+        "--ignore=RET504,TD002,TD001,TD003,PD015",
+        "--line-length=100"
       },
     }
   }

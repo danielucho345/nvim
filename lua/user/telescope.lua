@@ -11,7 +11,32 @@ telescope.setup {
     prompt_prefix = " ",
     selection_caret = " ",
     path_display = { "smart" },
+    file_ignore_patterns = {
+      "^./.git/",
+      "^./static/",
+      "static/",
+      "^node_modules/",
+      "^vendor/",
+      "^static/",
+      "node_modules/.*",
+      "vendor/.*",
+      "static/.*",
+      "static",
+      "static.vendor",
+      "static/vendor",
 
+    },
+
+    -- ripgrep_arguments = {
+    --   'rg',
+    --   '--hidden',
+    --   '--no-heading',
+    --   '--with-filename',
+    --   '--line-number',
+    --   '--column',
+    --   '--smart-case'
+    -- },
+    --
     mappings = {
       i = {
         ["<C-n>"] = actions.cycle_history_next,

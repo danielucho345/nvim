@@ -28,7 +28,7 @@ return {
         autoSearchPaths = true,
         typeCheckingMode = "basic",
         useLibraryCodeForTypes = true,
-        include = { "src" },
+        include = { "src","package","**/package" },
       },
     },
   },
