@@ -93,6 +93,9 @@ return packer.startup(function(use)
 
   --Todo
   use { "folke/todo-comments.nvim" }
+
+  -- Zen Mode
+  use "folke/zen-mode.nvim"
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
