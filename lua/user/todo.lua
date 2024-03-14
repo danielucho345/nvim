@@ -21,8 +21,9 @@ todo.setup{
     TODO = { icon = " ", color = "info" },
     HACK = { icon = " ", color = "warning" },
     WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-    PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+    PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" , "IMRPOVE"} },
     NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+    STUB  = { icon = " ", color = "hint", alt = { "SECTION" } },
     TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
   },
   gui_style = {
@@ -34,6 +35,7 @@ todo.setup{
   -- * before: highlights before the keyword (typically comment characters)
   -- * keyword: highlights of the keyword
   -- * after: highlights after the keyword (todo text)
+  -- NOTE Test
   highlight = {
     multiline = true,                -- enable multine todo comments
     multiline_pattern = "^.",        -- lua pattern to match the next multiline from the start of the matched keyword
@@ -41,7 +43,7 @@ todo.setup{
     before = "",                     -- "fg" or "bg" or empty
     keyword = "wide",                -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
     after = "fg",                    -- "fg" or "bg" or empty
-    pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlighting (vim regex)
+    pattern = [[.*<(KEYWORDS)\s* ]], -- pattern or table of patterns, used for highlighting (vim regex)
     comments_only = true,            -- uses treesitter to match keywords in comments only
     max_line_len = 400,              -- ignore lines longer than this
     exclude = {},                    -- list of file types to exclude highlighting
@@ -67,11 +69,11 @@ todo.setup{
     },
     -- regex that will be used to match keywords.
     -- don't replace the (KEYWORDS) placeholder
-    pattern = [[\b(KEYWORDS):]], -- ripgrep regex
+    pattern = [[\b(KEYWORDS) ]], -- ripgrep regex
     -- pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
   },
 }
-
+-- NOTE jump test
 vim.keymap.set("n", "]t", function()
   require("todo-comments").jump_next()
 end, { desc = "Next todo comment" })
@@ -82,6 +84,3 @@ end, { desc = "Previous todo comment" })
 
 -- You can also specify a list of valid jump keywords
 
-vim.keymap.set("n", "]t", function()
-  require("todo-comments").jump_next({keywords = { "ERROR", "WARNING" }})
-end, { desc = "Next error/warning todo comment" })

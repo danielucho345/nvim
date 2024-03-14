@@ -45,7 +45,7 @@ require('onedark').setup {
   },                           -- Override default colors
   highlights = {
     ["@spell"] = { fg = c.green },
-    ["@comment"] = { fg = c.grey },
+    ["@comment"] = { fg = c.black },
     ["@variable"] = { fg = c.red , },
     ["@variable@variable"] = { fg = c.yellow, },
     ["@variable.builtin"] = { fg = c.yellow },
