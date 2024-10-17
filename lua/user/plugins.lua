@@ -50,7 +50,7 @@ return packer.startup(function(use)
   use { "akinsho/bufferline.nvim" }
   use { "moll/vim-bbye" }
   use { "nvim-lualine/lualine.nvim" }
-  use { "akinsho/toggleterm.nvim" }
+  use { "akinsho/toggleterm.nvim"}
   use { "ahmedkhalf/project.nvim" }
   use { "lewis6991/impatient.nvim" }
   use { "lukas-reineke/indent-blankline.nvim" }
@@ -93,6 +93,15 @@ return packer.startup(function(use)
 
   --Todo
   use { "folke/todo-comments.nvim" }
+
+  use {
+    "danymat/neogen",
+    config = function()
+        require('neogen').setup {}
+    end,
+    -- Uncomment next line if you want to follow only stable versions
+    -- tag = "*"
+}
 
   -- Zen Mode
   use "folke/zen-mode.nvim"

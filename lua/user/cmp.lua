@@ -10,6 +10,16 @@ end
 
 require("luasnip/loaders/from_vscode").lazy_load()
 
+local neogen_status, neogen = pcall(require, "neogen")
+if not neogen_status then
+  print("neogen package error")
+  return
+end
+
+require("luasnip/loaders/from_vscode").lazy_load()
+
+
+
 local check_backspace = function()
   local col = vim.fn.col "." - 1
   return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
@@ -17,31 +27,31 @@ end
 
 local kind_icons = {
   Text = "󰉿",
-	Method = "󰆧",
-	Function = "󰊕",
-	Constructor = "",
+  Method = "󰆧",
+  Function = "󰊕",
+  Constructor = "",
   Field = " ",
-	Variable = "󰀫",
-	Class = "󰠱",
-	Interface = "",
-	Module = "",
-	Property = "󰜢",
-	Unit = "󰑭",
-	Value = "󰎠",
-	Enum = "",
-	Keyword = "󰌋",
+  Variable = "󰀫",
+  Class = "󰠱",
+  Interface = "",
+  Module = "",
+  Property = "󰜢",
+  Unit = "󰑭",
+  Value = "󰎠",
+  Enum = "",
+  Keyword = "󰌋",
   Snippet = "",
-	Color = "󰏘",
-	File = "󰈙",
+  Color = "󰏘",
+  File = "󰈙",
   Reference = "",
-	Folder = "󰉋",
-	EnumMember = "",
-	Constant = "󰏿",
+  Folder = "󰉋",
+  EnumMember = "",
+  Constant = "󰏿",
   Struct = "",
-	Event = "",
-	Operator = "󰆕",
+  Event = "",
+  Operator = "󰆕",
   TypeParameter = " ",
-	Misc = " ",
+  Misc = " ",
 }
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 
@@ -52,8 +62,9 @@ cmp.setup {
     end,
   },
   mapping = {
+    -- CPM configuration
     ["<C-k>"] = cmp.mapping.select_prev_item(),
-		["<C-j>"] = cmp.mapping.select_next_item(),
+    ["<C-j>"] = cmp.mapping.select_next_item(),
     ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
     ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
     ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
@@ -86,6 +97,27 @@ cmp.setup {
         cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
         luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, {
+      "i",
+      "s",
+    }),
+    -- Neogen configuration
+    ["<tab>"] = cmp.mapping(function(fallback)
+      if neogen.jumpable() then
+        neogen.jump_next()
+      else
+        fallback()
+      end
+    end, {
+      "i",
+      "s",
+    }),
+    ["<S-tab>"] = cmp.mapping(function(fallback)
+      if neogen.jumpable(true) then
+        neogen.jump_prev()
       else
         fallback()
       end
@@ -129,3 +161,5 @@ cmp.setup {
     native_menu = false,
   },
 }
+local opts = { noremap = true, silent = true }
+vim.api.nvim_set_keymap("n", "<Leader>nc", ":lua require('neogen').generate({ type = 'func' })<CR>", opts)

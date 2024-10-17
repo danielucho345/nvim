@@ -1,8 +1,8 @@
 local status_ok, toggleterm = pcall(require, "toggleterm")
 if not status_ok then
+  print("Error loading toggleterm")
   return
 end
-
 
 local BinaryFormat = package.cpath:match("%p[\\|/]?%p(%a+)")
 
@@ -73,16 +73,49 @@ end
 vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 
 local Terminal = require("toggleterm.terminal").Terminal
-local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
+
+local lazygit = Terminal:new({
+  cmd = "lazygit",
+  dir = "git_dir",
+  direction = "float",
+  float_opts = {
+    border = "double",
+  },
+  -- function to run on opening the terminal
+  on_open = function(term)
+    vim.cmd("startinsert!")
+    vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", {noremap = true, silent = true})
+  end,
+  -- function  to run on closing the terminal
+  on_close = function(term)
+    vim.cmd("startinsert!")
+  end,
+})
 
 function _LAZYGIT_TOGGLE()
   lazygit:toggle()
 end
 
-local node = Terminal:new({ cmd = "node", hidden = true })
+local pytest =Terminal:new({
+  cmd = "pytest",
+  direction = "float",
+  float_opts = {
+    border = "double",
+  },
+  -- function to run on opening the terminal
+  on_open = function(term)
+    vim.cmd("startinsert!")
+    vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", {noremap = false, silent = false})
+  end,
+  -- function  to run on closing the terminal
+  on_close = function(term)
+    vim.cmd("startinsert!")
+  end,
+})
+ 
 
-function _NODE_TOGGLE()
-  node:toggle()
+function _PYTEST_TOGGLE()
+  pytest:toggle()
 end
 
 local ncdu = Terminal:new({ cmd = "ncdu", hidden = true })
@@ -102,3 +135,4 @@ local python = Terminal:new({ cmd = "autopep8 --in-place --aggressive --aggressi
 function _PYTHON_TOGGLE()
   python:toggle()
 end
+
