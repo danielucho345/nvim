@@ -6,7 +6,10 @@ end
 
 
 vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
-  {silent = true, noremap = true}
+  { silent = true, noremap = true,desc="Trouble quickfix" }
 )
 
-trouble.setup()
+vim.keymap.set("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>",
+  { silent = true, noremap = true,desc = "Trouble Diagnostics" }
+)
+trouble.setup {}

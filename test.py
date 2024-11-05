@@ -48,3 +48,6 @@ def test(one, two, three, *arg, **kwargs) -> NoReturn:
         print(arg)
     if kwargs:
         print(kwargs)
+                        
+def seconf_function():
+    ....
