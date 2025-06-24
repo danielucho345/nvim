@@ -1,6 +1,9 @@
 return {
   "danymat/neogen",
-  dependencies = "nvim-treesitter/nvim-treesitter",
+  dependencies = {
+    "nvim-treesitter/nvim-treesitter",
+    "L3MON4D3/LuaSnip",
+  },
   config = function()
     require("neogen").setup({
       -- Enable neogen
@@ -43,9 +46,9 @@ return {
 
     -- Keymaps for neogen
     local opts = { noremap = true, silent = true }
-    vim.api.nvim_set_keymap("n", "<Leader>nf", ":lua require('neogen').generate()<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<Leader>nc", ":lua require('neogen').generate({ type = 'class' })<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<Leader>nt", ":lua require('neogen').generate({ type = 'type' })<CR>", opts)
+    vim.api.nvim_set_keymap("n", "nf", ":lua require('neogen').generate()<CR>", opts)
+    vim.api.nvim_set_keymap("n", "nc", ":lua require('neogen').generate({ type = 'class' })<CR>", opts)
+    vim.api.nvim_set_keymap("n", "nt", ":lua require('neogen').generate({ type = 'type' })<CR>", opts)
   end,
 }
 
