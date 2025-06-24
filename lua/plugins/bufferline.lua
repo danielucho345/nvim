@@ -2,16 +2,17 @@ return {
   "akinsho/bufferline.nvim",
   event = "VeryLazy",
   keys = {
+    { "<leader>bh", "<cmd>BufferLineMovePrev<cr>", desc = "Move buffer prev" },
+    { "<leader>bl", "<cmd>BufferLineMoveNext<cr>", desc = "Move buffer next" },
     { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle Pin" },
     { "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete Non-Pinned Buffers" },
-    { "<leader>br", "<Cmd>BufferLineCloseRight<CR>", desc = "Delete Buffers to the Right" },
-    { "<leader>bl", "<Cmd>BufferLineCloseLeft<CR>", desc = "Delete Buffers to the Left" },
+    { "<leader>bch", "<Cmd>BufferLineCloseRight<CR>", desc = "Delete Buffers to the Right" },
+    { "<leader>bcl", "<Cmd>BufferLineCloseLeft<CR>", desc = "Delete Buffers to the Left" },
     { "<S-h>", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev Buffer" },
     { "<S-l>", "<cmd>BufferLineCycleNext<cr>", desc = "Next Buffer" },
     { "[b", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev Buffer" },
     { "]b", "<cmd>BufferLineCycleNext<cr>", desc = "Next Buffer" },
-    { "[B", "<cmd>BufferLineMovePrev<cr>", desc = "Move buffer prev" },
-    { "]B", "<cmd>BufferLineMoveNext<cr>", desc = "Move buffer next" },
+    { "<leader>bsd", "<cmd>BufferLineSortByDirectory<cr>", desc = "Sort Buffer By Directory" },
   },
   opts = {
     options = {
@@ -20,7 +21,7 @@ return {
       -- stylua: ignore
       right_mouse_command = function(n) Snacks.bufdelete(n) end,
       diagnostics = "nvim_lsp",
-      always_show_bufferline = true,
+      always_show_bufferline = false,
       diagnostics_indicator = function(_, _, diag)
         local icons = LazyVim.config.icons.diagnostics
         local ret = (diag.error and icons.Error .. diag.error .. " " or "")
@@ -34,12 +35,13 @@ return {
           highlight = "Directory",
           text_align = "left",
         },
+        {
+          filetype = "snacks_layout_box",
+        },
       },
       ---@param opts bufferline.IconFetcherOpts
       get_element_icon = function(opts)
-        local icon = LazyVim.config.icons.ft[opts.filetype]
-        -- print("Icon for filetype " .. opts.filetype .. ": " .. (icon or "nil"))
-        return icon
+        return LazyVim.config.icons.ft[opts.filetype]
       end,
     },
   },
