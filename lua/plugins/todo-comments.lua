@@ -11,10 +11,6 @@ return {
           color = "error", -- can be a hex color, or a named color (see below)
           alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
         },
-        -- TODO:
-        -- TODO = { icon = "✅", color = "warning" },
-
-        -- HACK:
         HACK = { icon = "💻", color = "warning" },
         WARN = { icon = "⚠️", color = "warning", alt = { "WARNING", "XXX" } },
         PERF = { icon = "🚀", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE", "PERF", "OPTIM", "OPT" } },
@@ -25,22 +21,8 @@ return {
         IDEA = { icon = "💡", color = "hint", alt = { "THOUGHT", "SUGGESTION" } },
         QUESTION = { icon = "❓", color = "info", alt = { "QUERY", "Q" } },
         DEPRECATED = { icon = "⚠️", color = "warning", alt = { "OLD", "REMOVE" } },
-        -- FIX = {
-        --   icon = " ", -- icon used for the sign, and in search results
-        --   color = "error", -- can be a hex color, or a named color (see below)
-        --   alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-        -- },
-        -- -- TODO:
-        --TODO = { icon = " ", color = "info" },
-        -- HACK = { icon = " ", color = "warning" },
-        -- WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-        -- PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-        -- NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
         FAILED_TEST = { icon = "🚨", color = "error", alt = { "TESTING", "PASSED", "FAILED" } },
         STUB = { icon = "📂", color = "test", alt = { "SECTION", "!SECTION" } },
-        -- TEST: asdfasdf
-        -- STUB: ASDfasdfasdf
-        -- SECTION: fasdfasdf
       },
 
       gui_style = {
@@ -49,15 +31,16 @@ return {
       },
       merge_keywords = true, -- when true, custom keywords will be merged with the defaults
       highlight = {
-        multiline = true, -- enable multine todo comments
+        multiline = true, -- enable multiline todo comments
         multiline_pattern = "^.", -- lua pattern to match the next multiline from the start of the matched keyword
         multiline_context = 10, -- extra lines that will be re-evaluated when changing a line
         before = "", -- "fg" or "bg" or empty
-        keyword = "wide", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
+        keyword = "wide", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty
         after = "fg", -- "fg" or "bg" or empty
         pattern = {
-          [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlighting (vim regex)
-          [[.*"""(KEYWORDS)\s*:]], -- pattern to match Python triple-quoted comments
+          [[.*<(KEYWORDS)\s*:]], -- existing pattern
+          [[.*\[(KEYWORDS):]], -- added pattern for [TODO:description]
+          [[.*\b(KEYWORDS):]], -- added pattern for """[TODO:description]
         },
         comments_only = true, -- uses treesitter to match keywords in comments only
         max_line_len = 400, -- ignore lines longer than this
@@ -80,7 +63,7 @@ return {
           "--line-number",
           "--column",
         },
-        pattern = [[\b(KEYWORDS):]], -- ripgrep regex
+        pattern = [[\b(KEYWORDS):|\[(KEYWORDS):|\b(KEYWORDS):]], -- updated search pattern
       },
     })
   end,
