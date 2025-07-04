@@ -8,6 +8,31 @@ from typing import List, Dict, Optional, Union, Tuple
 from pathlib import Path
 
 
+class Test:
+    def __init__(self, name: str):
+        self.name = name
+
+    def greet(self) -> str:
+        """Returns a greeting message."""
+        return f"Hello, {self.name}!"
+
+
+class TestTest:
+    def __init__(self, test: Test):
+        self.test = test
+
+    def run(self) -> str:
+        """Runs the test and returns the greeting."""
+        return self.test.greet()
+
+
+test = TestTest("World")
+
+test.test.greet()
+
+a = 2
+
+
 # Example 1: Simple function - place cursor here and press <Leader>nf
 def calculate_area(length: float, width: float) -> float:
     """[TODO:description]
