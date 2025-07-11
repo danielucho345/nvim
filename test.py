@@ -47,6 +47,9 @@ def calculate_area(length: float, width: float) -> float:
     return length * width
 
 
+CONT = 3
+
+
 # Example 2: Function with multiple parameters and complex return type
 def process_data(
     data: List[Dict[str, Union[int, str]]],
